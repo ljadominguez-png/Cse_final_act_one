@@ -5,9 +5,9 @@ import re as regex
 #no Binary to hexa
 #realization (the proper use of bitwise operations)
 def Binary_to_hex (bin):
-    Binary = int(bin,16)#16 kase base 16
+    Binary = int(bin,2)#2 kase base 2
     Hex = hex(Binary)
-    return hex
+    return Hex
     #hex_chars = "0123456789ABCDEF"
     #temp_val = bin
     #raw_hex = ""
@@ -28,7 +28,7 @@ def Binary_to_hex (bin):
 def Hexa_to_binary (hex):
     Hexadecimal = int(hex,16)# yong base 16 convert into binary
     binary = bin(Hexadecimal)[2:]#originally kase may 0b siya so need tangalin yon
-    binary.zfill(21)#if kulang dag dagas
+    binary = binary.zfill(21)#if kulang dag dagas
     return binary
     
 
