@@ -1,99 +1,46 @@
-#importing reg ex
+#import regex to determine if the input is binary or decimal
 import re as regex
 
-#needed binary converter for both binary and hexa to binary.add()
-#no Binary to hexa
-#realization (the proper use of bitwise operations)
-def Binary_to_hex (bin):
-    Binary = int(bin,2)#2 kase base 2
-    Hex = hex(Binary)
-    return Hex
-    #hex_chars = "0123456789ABCDEF"
-    #temp_val = bin
-    #raw_hex = ""
-    
-    #if temp_val == 0: 
-    #    raw_hex = "0"
-        
-    #while temp_val > 0:
-    #    remainder = temp_val % 16
-    #    raw_hex = hex_chars[remainder] + raw_hex
-    #    temp_val = temp_val // 16
-
-    #while len(raw_hex) < 4:
-    #    raw_hex = '0' + raw_hex 
-    #print()
-
-#no i convert Hexa to binary
-def Hexa_to_binary (hex):
-    Hexadecimal = int(hex,16)# yong base 16 convert into binary
-    binary = bin(Hexadecimal)[2:]#originally kase may 0b siya so need tangalin yon
-    binary = binary.zfill(21)#if kulang dag dagas
-    return binary
-    
-
-def unicode (ucs):
-    x =''
-    y = ''
-    z = ''
-    byte_1 = ''
-    byte_2 = ''
-    byte_3 = ''
-    byte_4 = ''
-    print()
-
-def utf_eight (utf8):
-    x =''
-    y = ''
-    z = ''
-    byte_1 = ''
-    byte_2 = ''
-    byte_3 = ''
-    byte_4 = ''
-    print()
-    
-def utf_sixteen(utf16):
-    x =''
-    y = ''
-    z = ''
-    byte_1 = ''
-    byte_2 = ''
-    byte_3 = ''
-    byte_4 = ''
-    print()
-
-def decider (option):
-    if option == "Unicode[1]":
-        unicode(input(str('[Unicode] Enter a Hexadecimal or Binary: ')))
-    elif option == "utf-8[2]":
-        utf_eight(input(str('[utf-8] Enter a Hexadecimal or Binary: ')))
-    elif option == "utf-16[3]":
-        utf_sixteen(input(str('[utf-16] Enter a Hexadecimal or Binary: ')))
-    #do nothing
+# the analyzer which it decides if the input is binary or a hex
+def input_analyzer (raw_input):
+    #the [01] means we are only accepting inputs of 01 while may mga hex na 01 din
+    #nag lagay tayo ng {8,} which means ang minimum length para matawag na binary siya is dapa 8 ang length niya
+    if regex.fullmatch(r'^[01]{8,}$', raw_input):
+        return 'Binary'
+    elif regex.fullmatch(r'^[0-9A-Fa-f]+$', raw_input):
+        return 'Hexadecimal'
     else:
-        pass
+        return 'Invalid'
 
-def binary_or_hexa(code):
-    if regex.fullmatch(r'^[01]{8,}$', code):
-        print("Detected it is a Binary")
-    elif regex.fullmatch(r'^[0-9A-Fa-f]+$', code):
-        print("Detected it is a Hexadecimal")
-    else:
-        print("invalid input") 
+# a function to convert hex to binary using bitwise operators
+def hex_to_bin (hexa):
+    hexcode = int(hexa, 2)
+    binary = bin(hexcode)
+    complete_binary = binary.zfill(21)
+    return complete_binary
 
-#user input nalang muna
-user_input = input(str("choose what encoding scheme: (Unicode[1], utf-8[2], utf-16[3]: )"))
-choice = user_input
-options =""
-if choice == '1':
-    options = "Unicode[1]"
-elif choice == '2':
-    options = 'utf-8[2]'
-elif choice == '3':
-    options == 'utf-16[3]'
-else:
-    options = 'invalid'
+# a function to convert binary to hex using bitwise operators
+def bin_to_hex (binary):
+    bitcode = int(binary, 16)
+    hexacode = hex(bitcode)
+    return hexacode
 
-decider(options)
+#the process (ucs),(utf-8),(utf-16)
+def process():
+    pass
 
-print(f" You choose: {options}")
+def main():
+    print("choose what encoding scheme:")
+    print("unicode  [1]")
+    print("utf-8    [2]")
+    print("utf-16   [3]")
+    user_input = input("Your choice: ")
+    #at dahil unpredictable ang user maglalagay tayo ng .replace() method para lahat ng spaces
+    #ay matatanggal
+    raw_input = input("Enter a Binary/Hexadecimal: ").replace(" ","")
+    print(input_analyzer(raw_input))
+    
+
+if __name__ == '__main__':
+    main()
+
